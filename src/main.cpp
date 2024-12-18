@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1351.h>
+#include <Adafruit_AHTX0.h>
 #include <WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
@@ -31,6 +32,11 @@ const uint8_t   OLED_pin_res_rst        = 37;
 const uint8_t   OLED_pin_dc_rs          = 36;
 const uint8_t   OLED_pin_cs_ss          = 35;
 
+const uint8_t   I2C_scl             = 40;
+const uint8_t   I2C_sda             = 41;
+
+Adafruit_AHTX0 aht10;
+
 // Color definitions
 #define	BLACK           0x0000
 #define	BLUE            0x001F
@@ -50,8 +56,15 @@ Adafruit_SSD1351 oled =
         OLED_pin_cs_ss,
         OLED_pin_dc_rs,
         OLED_pin_res_rst
-     );
+    );
 
+void task1(void *pt) {
+  pinMode(21, OUTPUT);
+  while (1) {
+    digitalWrite(21, !digitalRead(21));
+    vTaskDelay(3000);
+  }
+}
 
 void setup() {
 
@@ -66,6 +79,15 @@ void setup() {
         delay (500);
         Serial.print (".");
     }
+
+    if (xTaskCreate(task1,
+                  "Blink 23",
+                  1024,
+                  NULL,
+                  1,
+                  NULL) == pdPASS)
+    Serial.println("Task1 Created.");
+
 
     timeClient.begin();
 }
