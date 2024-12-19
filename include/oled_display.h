@@ -1,3 +1,4 @@
+/*
 #pragma once
 #ifndef OLED_DISPLAY_H
 #define OLED_DISPLAY_H
@@ -37,5 +38,17 @@ void display_fill_rect(int x, int y, int w, int h, uint16_t color);
 void display_draw_pixel(int x, int y, uint16_t color);
 void display_set_window(int x, int y, int w, int h);
 void display_draw_line(int x0, int y0, int x1, int y1, uint16_t color);
+
+#endif // DISPLAY_H
+ */
+
+
+#ifndef DISPLAY_H
+#define DISPLAY_H
+
+#include <Adafruit_SSD1351.h>
+extern Adafruit_SSD1351 display;
+
+void display_init();
 
 #endif // DISPLAY_H

@@ -186,12 +186,8 @@ int main(void) {
 #include "modules/oled_display.cpp"
 
 void setup() {
-    Serial.begin(115200);
-    display_init();  // 初始化屏幕
-    display_clear(); // 清屏
-    display_text("Hello, ESP32!", 0, 0, 2, 0xFFFF);  // 显示文字
+    display_init();
 }
 
 void loop() {
-    // 示例测试
 }
