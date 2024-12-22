@@ -6,6 +6,9 @@ Adafruit_AHTX0 aht;
 // 信号量（由 main.cpp 中初始化）
 extern SemaphoreHandle_t aht10_signal;
 
+// 引用全局温湿度变量
+extern char current_temp_hum[32];
+
 bool aht10_init(int sdaPin, int sclPin) {
     Wire.begin(sdaPin, sclPin);
 
@@ -28,10 +31,16 @@ void aht10_task(void *parameter) {
                 float temperature, humidity;
                 sensors_event_t humidityEvent, temperatureEvent;
 
+                // 获取温湿度数据
                 aht.getEvent(&humidityEvent, &temperatureEvent);
                 temperature = temperatureEvent.temperature;
                 humidity = humidityEvent.relative_humidity;
 
+                // 更新全局温湿度变量
+                snprintf(current_temp_hum, sizeof(current_temp_hum), 
+                         "Temp: %.1fC Hum: %.1f%%", temperature, humidity);
+
+                // 串口输出调试信息
                 Serial.printf("[AHT10] Temperature: %.2f °C, Humidity: %.2f %%\n", 
                               temperature, humidity);
 

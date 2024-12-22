@@ -11,6 +11,11 @@
 SemaphoreHandle_t i2c_mutex;
 SemaphoreHandle_t aht10_signal;
 
+// 全局共享变量
+char current_time[16] = "00:00";
+char current_date[16] = "0000/00/00";
+char current_temp_hum[32] = "Temp: --.-C Hum: --.-%";
+
 void setup() {
     Serial.begin(115200);
 
@@ -44,5 +49,5 @@ void setup() {
 }
 
 void loop() {
-    // 主循环不需要操作
+    //Mr.Cyren
 }

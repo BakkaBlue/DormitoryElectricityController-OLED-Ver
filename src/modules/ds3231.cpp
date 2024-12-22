@@ -6,6 +6,10 @@ RTC_DS3231 rtc;
 // 信号量（由 main.cpp 中初始化）
 extern SemaphoreHandle_t aht10_signal;
 
+// 引用全局时间和日期变量
+extern char current_time[16];
+extern char current_date[16];
+
 void ds3231_init(int sdaPin, int sclPin) {
     Wire.begin(sdaPin, sclPin);
     Wire.setClock(100000); // 设置 I2C 频率为 100kHz
@@ -31,8 +35,16 @@ void ds3231_task(void *parameter) {
             DateTime now = rtc.now();
 
             if (now.isValid()) { // 检查时间是否有效
-                Serial.printf("[DS3231] Time: %02d/%02d/%02d %02d:%02d\n", 
-                              now.year() % 100, now.month(), now.day(), now.hour(), now.minute());
+                // 更新全局时间变量
+                snprintf(current_time, sizeof(current_time), "%02d:%02d", 
+                         now.hour(), now.minute());
+
+                // 更新全局日期变量
+                snprintf(current_date, sizeof(current_date), "%04d/%02d/%02d", 
+                         now.year(), now.month(), now.day());
+
+                // 串口输出时间和日期
+                Serial.printf("[DS3231] Date: %s, Time: %s\n", current_date, current_time);
 
                 // 通知 AHT10 任务
                 xSemaphoreGive(aht10_signal);
@@ -45,6 +57,6 @@ void ds3231_task(void *parameter) {
             Serial.println("[DS3231] Failed to acquire I2C mutex.");
         }
 
-        vTaskDelay(10000 / portTICK_PERIOD_MS); // 每秒运行一次
+        vTaskDelay(2000 / portTICK_PERIOD_MS); // 每10秒运行一次
     }
 }
