@@ -45,6 +45,6 @@ void ds3231_task(void *parameter) {
             Serial.println("[DS3231] Failed to acquire I2C mutex.");
         }
 
-        vTaskDelay(1000 / portTICK_PERIOD_MS); // 每秒运行一次
+        vTaskDelay(10000 / portTICK_PERIOD_MS); // 每秒运行一次
     }
 }
