@@ -41,7 +41,7 @@ void aht10_task(void *parameter) {
                          "Temp: %.1fC Hum: %.1f%%", temperature, humidity);
 
                 // 串口输出调试信息
-                Serial.printf("[AHT10] Temperature: %.2f °C, Humidity: %.2f %%\n", 
+                //Serial.printf("[AHT10] Temperature: %.2f °C, Humidity: %.2f %%\n", 
                               temperature, humidity);
 
                 xSemaphoreGive(i2c_mutex); // 释放 I2C 互斥锁

@@ -36,15 +36,15 @@ void ds3231_task(void *parameter) {
 
             if (now.isValid()) { // 检查时间是否有效
                 // 更新全局时间变量
-                snprintf(current_time, sizeof(current_time), "%02d:%02d", 
-                         now.hour(), now.minute());
+                snprintf(current_time, sizeof(current_time), "%02d:%02d:%02d", 
+                         now.hour(), now.minute(), now.second());
 
                 // 更新全局日期变量
                 snprintf(current_date, sizeof(current_date), "%04d/%02d/%02d", 
                          now.year(), now.month(), now.day());
 
-                // 串口输出时间和日期
-                Serial.printf("[DS3231] Date: %s, Time: %s\n", current_date, current_time);
+                // 串口输出时间和日期（仅用于调试，可移除）
+                //Serial.printf("[DS3231] Date: %s, Time: %s\n", current_date, current_time);
 
                 // 通知 AHT10 任务
                 xSemaphoreGive(aht10_signal);
@@ -57,6 +57,6 @@ void ds3231_task(void *parameter) {
             Serial.println("[DS3231] Failed to acquire I2C mutex.");
         }
 
-        vTaskDelay(2000 / portTICK_PERIOD_MS); // 每10秒运行一次
+        vTaskDelay(1000 / portTICK_PERIOD_MS); // 每秒更新一次
     }
 }
