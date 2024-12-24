@@ -72,7 +72,10 @@ void loop() {
             delete_alarm(index);
         } else if (strcmp(command, "LIST") == 0) {
             list_alarms();
-        } else {
+        } //else if () {
+
+        //} 
+        else {
             Serial.println("[Alarm] Invalid command. Use SET, DEL, or LIST.");
         }
     }

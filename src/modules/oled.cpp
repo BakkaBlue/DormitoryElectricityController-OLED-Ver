@@ -20,7 +20,7 @@ bool oled_init(int sdaPin, int sclPin) {
     u8g2.setFont(u8g2_font_ncenB08_tr);
     u8g2.drawStr(0, 10, "OLED Ready!");
     u8g2.sendBuffer();
-    Serial.println("[OLED] Initialized successfully.");
+    Serial.println("[OLED] Initializion successful.");
     return true;
 }
 

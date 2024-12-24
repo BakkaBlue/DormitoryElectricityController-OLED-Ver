@@ -45,7 +45,7 @@ A compact and efficient electricity management solution for dormitories, featuri
 
 ## Usage
 
-### OLED Navigation
+### OLED Navigation - Under Construction
 - **Left/Right Buttons**: Navigate through the menu.
 - **Confirm Button**: Select an option.
 - **Back Button**: Return to the previous menu.
@@ -57,6 +57,7 @@ A compact and efficient electricity management solution for dormitories, featuri
 
 ### Alarm Clock
 - Wake up every morning to ***annoying buzzer music***, on time.
+- Temporarily need serial port to set alarm
 
 ## Contribution
 
